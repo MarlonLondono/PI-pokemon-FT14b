@@ -1,6 +1,7 @@
-const { Pokemon } = require('../db');
+const { Pokemon, Type } = require('../db');
 const { API, isUUID } = require('../constants');
 const axios = require('axios');
+const { types } = require('pg');
 const router = require('express').Router();
 
 router.get('/',async(req,res)=>{
@@ -34,7 +35,18 @@ router.get('/',async(req,res)=>{
     }else{
         let limit = 12;
         let poke = await axios.get(`${API}?limit=${limit}`);
-        res.json(poke.data.results);
+        const pokemonsDt = poke.data.results.map(pokemon => pokemon.url)
+        const pokemon = await Promise.all(pokemonsDt.map(pokemon => axios.get(pokemon)))
+        const pokes = pokemon.map(poke => {
+            let types = poke.data.types.map(t => t.type.name);
+            return {
+                id: poke.data.id,
+                name: poke.data.name,
+                picture: poke.data.sprites.versions["generation-v"]["black-white"].animated.front_default,
+                types
+            }
+        })
+        res.json(pokes);
     }
 })
 
@@ -74,33 +86,30 @@ router.get('/:idPokemon',async (req,res)=>{
 })
 
 router.post('/',async(req,res)=>{
-    let {name, life, force, defense, speed, height, weight} = req.body;
-    life ? life : life = null
-    force ? force : force = null
-    defense ? defense : defense = null
-    speed ? speed : speed = null
-    height ? height : height = null
-    weight ? weight : weight = null
-    if(name){
-        try{
-            let [pokemon, created] = await Pokemon.findOrCreate({
+    let {name, life, force, defense, speed, height, weight, types} = req.body;
+    console.log(name,life,force,defense,speed,height,weight,types);
+    let relTypes = types.map(type => {
+            return Type.findOrCreate({
                 where:{
-                    name: name,
-                    life: life,
-                    force: force,
-                    defense: defense,
-                    speed: speed,
-                    height: height,
-                    weight: weight
+                    name: type
                 }
             })
-            res.json(pokemon);
-        }catch(error){
-            console.log(error);
+        });        
+    let allTypes = await Promise.all(relTypes);
+    let pokemon = await Pokemon.findOrCreate({
+        where:{
+            name: name,
+            life: life,
+            force: force,
+            defense: defense,
+            speed: speed,
+            height: height,
+            weight: weight
         }
-    }else{
-        res.status(400).send('No se pudo agregar');
-    }
+    })
+    allTypes.forEach(type => pokemon[0].setTypes(type[0]));
+    res.json(pokemon);
+    
 })
 
 module.exports = router;
