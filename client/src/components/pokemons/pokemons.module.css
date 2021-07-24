@@ -1,0 +1,88 @@
+.extern{
+    height: 700px;
+}
+
+.container{
+    display: flex;
+}
+
+.barleft{
+    margin-left: 10px;
+    margin-top: 10px;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: inline-block;
+    width: 20%;
+    height: auto;
+    background-color: rgba(6, 7, 18, 0.6);
+    border-radius: 15px;
+    color: white;
+}
+
+.barleft ul{
+    list-style: none;
+}
+
+.barright{
+    display: flex;
+    flex-wrap: wrap;
+    width: 80%;
+}
+
+.card{
+    width: 19%;
+    height: auto;
+    background-color: rgba(6, 7, 18, 0.6);
+    margin: 10px;
+    padding: 18px;
+    text-align: center;
+    border-radius: 15px;
+    color: white;
+}
+
+.card .images{
+    width: 50%;
+    border-radius: 10px;
+    margin-left: 25%;
+    margin-top: 3%;
+    margin-bottom: 5%;
+}
+
+.card .images img{
+    width: 50px;
+}
+
+.card h2 {
+    color: white;
+    font-weight: 600;
+}
+
+.card p {
+    color: white;
+    font-weight: 600;
+}
+
+.card ul{
+    list-style: none;
+}
+
+.input :focus{
+    background-color: aqua;
+}
+
+.search{
+    margin-left: 69%;
+    margin-top: 10px;
+}
+
+.search input[type=text]{
+    width: 300px;
+    border-radius: 5px;
+    height: 25px;
+}
+
+.btn{
+    width: 80px;
+    height: 25px;
+}

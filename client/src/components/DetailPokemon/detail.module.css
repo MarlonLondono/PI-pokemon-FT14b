@@ -1,0 +1,48 @@
+.extern{
+    height: 771px;
+}
+.contain{
+    background-color: rgba(6, 7, 18, 0.6);
+    width: 50%;
+    margin-left: 25%;
+    margin-top: 20px;
+    margin-bottom: 0px;
+    padding-top: 10px;
+    height: 675px;
+    color: white;
+}
+
+.contain .detail{
+    width: 100%;
+    display: flex;
+    margin-top: 5%;
+}
+
+.contain .detail .image{
+    width: 50%;
+}
+
+h1{
+    text-align: center;
+}
+
+.contain img{
+    width: 35%;
+    margin-left: 42%;
+}
+
+.contain p{
+    margin-left: 20%;
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.contain ul{
+    margin-left: 25%;
+    list-style: none;
+    /* display: flex; */
+}
+
+.info{
+    width: 100%;
+}

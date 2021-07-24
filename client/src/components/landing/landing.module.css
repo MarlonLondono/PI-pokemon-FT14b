@@ -1,0 +1,52 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.container{
+    position: relative;
+    display: inline-block;
+
+}
+
+.container img{
+    width: 100%;
+    height: auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+@font-face {
+    font-family: Pokemon;
+    src: url(../../fonts/Pokemon\ Solid.ttf);
+}
+
+.titulo{
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.72);
+    /* opacity: 0.8; */
+    width: 60%;
+    height: 60%;
+    top: 20%;
+    left: 20%;    
+    
+}
+
+.titulo h1{
+    color: #FAEB19;
+    text-align: center;
+    font-size: 40px;
+    font-family: Pokemon;
+    -webkit-text-stroke: 2px blue;
+}
+
+.titulo div h3{
+    text-align: center;
+    -webkit-text-stroke: 2px black;
+    color: white;    
+}
+
+.titulo img{
+    margin-top: 5%;
+}

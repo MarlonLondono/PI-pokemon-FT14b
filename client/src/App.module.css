@@ -1,0 +1,7 @@
+.App{
+    background: url('./img/background.jpg');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position-y: bottom;
+    height: auto;
+}
