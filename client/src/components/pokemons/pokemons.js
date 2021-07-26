@@ -54,7 +54,7 @@ function Pokemons({currentPokemons, getPokemon}){
                 <div className={style.search}>
                     <form onSubmit={DetailPokemon}>
                         <input className={style.input} type="text" value={search} onChange={(e)=>onHandleChange(e)} />
-                        <input className={style.btn} type="submit" value="Buscar"/>
+                        <input className={style.btn} type="submit" value="Search"/>
                     </form>
                 </div>
                 <div className={style.container}>
