@@ -1,32 +1,42 @@
-import React,{useState, useEffect} from 'react';
+import React,{useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import style from './pokemons.module.css';
 import notFound from '../../img/notfound.jpg';                                              
-import { getPokemons } from '../../actions';
+import {orderAscDesc, orderForceAscDesc, filterType, backHome } from '../../actions';
 
-function Pokemons({currentPokemons, getPokemon, pokemonsState}){
+function Pokemons({currentPokemons, getPokemon}){
     const [search,setSearch] = useState();
     const TypesState = useSelector(store => store.getTypes);
     const history = useHistory();
     const dispatch = useDispatch();
-    
 
     const onHandleChange = (event)=>{
         setSearch(event.target.value);
     }    
-    const orderAsc = () => {
-        console.log(pokemonsState);
-        pokemonsState.sort((prev, next) => {
-            if(prev.name > next.name){
-                return 1;
-            }
-            if(prev.name < next.name){
-                return -1;
-            }
-            return 0;
-        })
+    const orderAscPokemons = (e) => {
+        e.preventDefault();
+        dispatch(orderAscDesc(e.target.name));
     }
+
+    const orderForcePokemons = (e) => {
+        console.log(e.target.name);
+        e.preventDefault();
+        dispatch(orderForceAscDesc(e.target.name));
+    }
+
+    const filterTypes = (e) => {
+        console.log(e.target.name);
+        e.preventDefault();
+        dispatch(filterType(e.target.name));
+    }
+
+    const backToHome = (e) => {
+        e.preventDefault();
+        dispatch(backHome());
+        history.push('/pokemons');
+    }
+
     const DetailPokemon =(e)=>{
         if(search){
             e.preventDefault();
@@ -49,22 +59,22 @@ function Pokemons({currentPokemons, getPokemon, pokemonsState}){
                 </div>
                 <div className={style.container}>
                     <div className={style.barleft}>
-                        <p> Filtros:</p>
+                        <p> Filters:</p>
                         <ul>
                             {
-                                TypesState.map((t,i) => {
+                                TypesState.map((t) => {
                                     return (
-                                        <li><input type="checkbox" key={i} />{t.name}</li>
+                                        <li key={t.id}><button name={t.name} onClick={filterTypes} >{t.name}</button></li>
                                     )
                                 })
                             }
                         </ul>
-                        <p> Ordenamientos:</p>
+                        <p> Ordinances:</p>
                         <ul>
-                            <li><input type="checkbox" onChange={(e) => orderAsc(e)}/> A to Z</li>
-                            <li><input type="checkbox" /> Z to A</li>
-                            <li><input type="checkbox" /> + Force to - Force</li>
-                            <li><input type="checkbox" /> - Force to + Force</li>
+                            <li><button name="atoz" onClick={orderAscPokemons} > A to Z</button></li>
+                            <li><button name="ztoa" onClick={orderAscPokemons} > Z to A</button></li>
+                            <li><button name="-fto+f" onClick={orderForcePokemons}> - Force to + Force </button></li>
+                            <li><button name="+fto-f" onClick={orderForcePokemons}> + Force to - Force</button></li>
                         </ul>
                     </div>
                     <div className={style.barright}>
@@ -98,7 +108,14 @@ function Pokemons({currentPokemons, getPokemon, pokemonsState}){
         )
     }
 
-    const showLoading = () => <h1> Pokemons vacio</h1>
+    const showLoading = () => (
+        <div>
+            <h1> Loading Pokemóns...</h1>
+            <div>
+                <button onClick={backToHome}>Back to home</button>
+            </div>
+        </div>
+    )
 
     return (
         <div>

@@ -1,6 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import {isUUID} from '../../actions';
 import style from './detail.module.css';
 import notFound from '../../img/notfound.jpg';
@@ -75,7 +74,11 @@ const DetailPokemon = (props)=>{
         )
     }
 
-    const showLoading = () => <h1>Cargando...</h1>
+    const showLoading = () => (
+        <div>
+            <h1>Loading...</h1>
+        </div>
+    )
 
     return (
         <div>

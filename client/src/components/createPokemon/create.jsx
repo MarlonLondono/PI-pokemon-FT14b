@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {useHistory} from 'react-router-dom';
-import { getTypes, postPokemon, getPokemons } from "../../actions";
+import { getTypes, postPokemon, getPokemons, getPokemon } from "../../actions";
 import style from './create.module.css';
 
 const Create = () =>{
     const history = useHistory();
     const dispatch = useDispatch();
     const TypesState = useSelector(store => store.getTypes);
-    const msg = useSelector(store => store.msg)
+    const msg = useSelector(store => store.msg);
 
     const [pokemon,setPokemon] = useState({
         name: '',
@@ -49,7 +49,6 @@ const Create = () =>{
 
     const onHandleSubmit = (e) => {
         e.preventDefault();
-        dispatch(getPokemons());
         dispatch(postPokemon(pokemon));
         alert(msg);
         history.push('/pokemons');

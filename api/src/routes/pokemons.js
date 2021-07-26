@@ -37,9 +37,11 @@ router.get('/',async(req,res)=>{
                     res.json(newPokemon);
                 })
             }else if(pokeDb){
-                res.json(pokeDb[0]);
-            }else{
-                res.status(404).send('pokemon no encontrado');
+                if(pokeDb[0]){
+                    res.json(pokeDb[0]);
+                }else{
+                    res.status(404).send('pokemon no encontrado');
+                }
             }
         }
     }else{
@@ -57,7 +59,8 @@ router.get('/',async(req,res)=>{
                 id: poke.data.id,
                 name: poke.data.name,
                 picture: poke.data.sprites.versions["generation-v"]["black-white"].animated.front_default,
-                types
+                types,
+                force: poke.data.stats[1].base_stat
             }
         })
         let pokeDb = await Pokemon.findAll({include: Type});
@@ -117,7 +120,7 @@ router.post('/',async(req,res)=>{
     weight ? weight : weight = null;
     types ? types : types = null;
     console.log(name,life,force,defense,speed,height,weight,types);
-    let relTypes = types.map(type => {
+    let relTypes = types && types.map(type => {
             return Type.findOrCreate({
                 where:{
                     name: type
@@ -138,7 +141,6 @@ router.post('/',async(req,res)=>{
     })
     allTypes.forEach(type => pokemon[0].setTypes(type[0]));
     res.send('registro exitoso');
-    
 })
 
 module.exports = router;

@@ -14,17 +14,23 @@ import style from './App.module.css';
 function App() {
   const dispatch = useDispatch();
   const PokemonsState = useSelector(store => store.getPokemons);
+  const indexOrder = useSelector(store => store.index);
+  const filter = useSelector(store => store.filter);
+  const filterPokemons = useSelector(store => store.filterType);
   const [currentPage, setCurrenpage] = useState(1);
-  const [pokemonsPerPage, setPokemonsPerPage] = useState(12); 
+  const [pokemonsPerPage] = useState(12); 
 
   useEffect(()=>{
-    dispatch(getPokemons());
+    if(indexOrder === 0){
+      dispatch(getPokemons());
+    }
     dispatch(getTypes());
-  },[dispatch])
+  },[dispatch,indexOrder,filter])
 
   const indexOfLastPokemon = currentPage * pokemonsPerPage;
   const indexOfFirstPokemon = indexOfLastPokemon - pokemonsPerPage;
   const currentPokemons = PokemonsState.slice(indexOfFirstPokemon, indexOfLastPokemon);
+  const currentFilter = filterPokemons.slice(indexOfFirstPokemon, indexOfLastPokemon);
 
   const paginate = (pageNumber)=> setCurrenpage(pageNumber);
 
@@ -39,10 +45,10 @@ function App() {
         <NavBar />
       </Route>
       <Route exact path="/pokemons">
-        <Pokemons currentPokemons={currentPokemons} getPokemon={getPokemon} pokemonsState={PokemonsState} />
+        <Pokemons currentPokemons={filter ? currentFilter : currentPokemons} getPokemon={getPokemon} pokemonsState={PokemonsState} />
         <Pagination 
         pokemonsPerPage={pokemonsPerPage} 
-        totalPokemons={PokemonsState.length} 
+        totalPokemons={filter ? filterPokemons.length : PokemonsState.length} 
         paginate={paginate} />
       </Route>
       <Route path="/pokemons/detail">
