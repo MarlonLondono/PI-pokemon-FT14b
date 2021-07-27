@@ -16,9 +16,18 @@ describe('Pokemon routes', () => {
   }));
   beforeEach(() => Pokemon.sync({ force: true })
     .then(() => Pokemon.create(pokemon)));
-  describe('GET /pokemons', () => {
+  describe('GET /types', () => {
     it('should get 200', () =>
-      agent.get('/pokemons').expect(200)
+      agent.get('/types').expect(200)
     );
   });
+  describe('GET /pokemons', ()=>{
+    it('should get 200', () =>{
+      agent.get('/pokemons').expect(200);
+    });
+    it('responds 40 pokemon or more', () =>
+    agent.get('/pokemons/').then((res) => {
+      expect(res.body).to.have.lengthOf.above(39);
+    }));
+  })
 });

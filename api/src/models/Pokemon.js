@@ -31,6 +31,9 @@ module.exports = (sequelize) => {
     },
     weight:{
       type: DataTypes.REAL
+    },
+    isDB:{
+      type: DataTypes.BOOLEAN
     }
   });  
 };

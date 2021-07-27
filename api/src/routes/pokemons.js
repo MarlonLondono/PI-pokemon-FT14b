@@ -32,7 +32,8 @@ router.get('/',async(req,res)=>{
                         types,
                         stats,
                         height: dtPoke.data.height,
-                        weight: dtPoke.data.weight
+                        weight: dtPoke.data.weight,
+                        isDB: false
                     }            
                     res.json(newPokemon);
                 })
@@ -60,7 +61,8 @@ router.get('/',async(req,res)=>{
                 name: poke.data.name,
                 picture: poke.data.sprites.versions["generation-v"]["black-white"].animated.front_default,
                 types,
-                force: poke.data.stats[1].base_stat
+                force: poke.data.stats[1].base_stat,
+                isDB: false
             }
         })
         let pokeDb = await Pokemon.findAll({include: Type});
@@ -136,7 +138,8 @@ router.post('/',async(req,res)=>{
             defense: defense,
             speed: speed,
             height: height,
-            weight: weight
+            weight: weight,
+            isDB: true
         }
     })
     allTypes.forEach(type => pokemon[0].setTypes(type[0]));

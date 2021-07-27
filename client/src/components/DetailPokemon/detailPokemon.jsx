@@ -76,7 +76,7 @@ const DetailPokemon = (props)=>{
 
     const showLoading = () => (
         <div>
-            <h1>Loading...</h1>
+            <h1>No hay Datos...</h1>
         </div>
     )
 

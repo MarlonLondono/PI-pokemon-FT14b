@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {useHistory} from 'react-router-dom';
-import { getTypes, postPokemon, getPokemons, getPokemon } from "../../actions";
+import { getTypes, postPokemon, getPokemons} from "../../actions";
 import style from './create.module.css';
 
 const Create = () =>{
@@ -50,6 +50,7 @@ const Create = () =>{
     const onHandleSubmit = (e) => {
         e.preventDefault();
         dispatch(postPokemon(pokemon));
+        dispatch(getPokemons());
         alert(msg);
         history.push('/pokemons');
     }

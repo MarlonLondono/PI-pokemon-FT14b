@@ -3,17 +3,18 @@ import {useHistory} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import style from './pokemons.module.css';
 import notFound from '../../img/notfound.jpg';                                              
-import {orderAscDesc, orderForceAscDesc, filterType, backHome } from '../../actions';
+import {searchPokemon, orderAscDesc, orderForceAscDesc, filterType, filterDb} from '../../actions';
 
 function Pokemons({currentPokemons, getPokemon}){
     const [search,setSearch] = useState();
+    const history = useHistory();    
     const TypesState = useSelector(store => store.getTypes);
-    const history = useHistory();
     const dispatch = useDispatch();
 
     const onHandleChange = (event)=>{
         setSearch(event.target.value);
     }    
+    
     const orderAscPokemons = (e) => {
         e.preventDefault();
         dispatch(orderAscDesc(e.target.name));
@@ -31,28 +32,32 @@ function Pokemons({currentPokemons, getPokemon}){
         dispatch(filterType(e.target.name));
     }
 
-    const backToHome = (e) => {
+    const handleFilterDB = (e) => {
+        console.log(e.target.name);
         e.preventDefault();
-        dispatch(backHome());
-        history.push('/pokemons');
+        dispatch(filterDb(e.target.name));
+    }
+
+    const onHandleSubmit = (e) => {
+        e.preventDefault();
+        if(search){
+            dispatch(searchPokemon(search));
+        }else{
+            alert('please enter a name');
+        }
     }
 
     const DetailPokemon =(e)=>{
-        if(search){
-            e.preventDefault();
-            dispatch(getPokemon(search));
-            history.push('/pokemons/detail');
-        }else{
-            e.preventDefault();
-            alert('Por favor digite un nombre');
-        }
-        
+        console.log(e.target.name);
+        e.preventDefault();
+        dispatch(getPokemon(e.target.name));
+        history.push('/pokemons/detail');        
     }
     const showPokemons = () =>{    
         return (
             <div className={style.extern}>
                 <div className={style.search}>
-                    <form onSubmit={DetailPokemon}>
+                    <form onSubmit={onHandleSubmit}>
                         <input className={style.input} type="text" value={search} onChange={(e)=>onHandleChange(e)} />
                         <input className={style.btn} type="submit" value="Search"/>
                     </form>
@@ -68,6 +73,8 @@ function Pokemons({currentPokemons, getPokemon}){
                                     )
                                 })
                             }
+                            <li><button name="bd" onClick={handleFilterDB}> Pokemons de la BD</button></li>
+                            <li><button name="api" onClick={handleFilterDB}>Pokemons de la API</button></li>
                         </ul>
                         <p> Ordinances:</p>
                         <ul>
@@ -87,7 +94,7 @@ function Pokemons({currentPokemons, getPokemon}){
                                                 pokemon.picture ? (<img src={pokemon.picture}/>) : (<img src={notFound}/>)
                                             } 
                                         </div>
-                                        <h2> {pokemon.name} </h2>
+                                        <a onClick={DetailPokemon} name={pokemon.name}> {pokemon.name} </a>
                                         <p> Types :</p>
                                         <ul>
                                             {
@@ -111,9 +118,6 @@ function Pokemons({currentPokemons, getPokemon}){
     const showLoading = () => (
         <div>
             <h1> Loading Pokemóns...</h1>
-            <div>
-                <button onClick={backToHome}>Back to home</button>
-            </div>
         </div>
     )
 

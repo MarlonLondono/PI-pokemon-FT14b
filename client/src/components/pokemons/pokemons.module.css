@@ -1,5 +1,5 @@
 .extern{
-    height: 680px;
+    height: auto;
 }
 
 .container{
@@ -24,10 +24,36 @@
     list-style: none;
 }
 
+.barleft li button{
+    width: 100px;
+    margin: 2px;
+    background-color: rgba(44, 97, 210, 0.89);
+    border-radius: 10px;
+    color: white;
+    font-weight: 700;
+    border-color: white;
+}
+
+.barleft li button:hover{
+    width: 100px;
+    margin: 2px;
+    background-color: white;
+    border-radius: 10px;
+    color: rgba(44, 97, 210, 0.89);
+    font-weight: 700;
+    border-color: white;
+}
+
 .barright{
     display: flex;
     flex-wrap: wrap;
     width: 80%;
+}
+
+.barright a{
+    font-size: 25px;
+    font-weight: 800;
+    cursor: pointer;
 }
 
 .card{
@@ -85,4 +111,17 @@
 .btn{
     width: 80px;
     height: 25px;
+    background-color: rgba(44, 97, 210, 0.89);
+    border-color: white;
+    border-radius: 10px;
+    color: white;
+}
+
+.btn:hover{
+    width: 80px;
+    height: 25px;
+    background-color: white;
+    border-color: white;
+    border-radius: 10px;
+    color: rgba(44, 97, 210, 0.89);
 }

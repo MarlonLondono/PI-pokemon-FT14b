@@ -9,7 +9,8 @@ export const ORDER_ASC_DESC = 'ORDER_ASC_DESC';
 export const FORCE_ASC_DESC = 'FORCE_ASC_DESC';
 export const FILTER_TYPE = 'FILTER_TYPE';
 export const BACK_HOME = 'BACK_HOME';
-
+export const FILTER_DB = 'FILTER_DB';
+export const SEARCH = 'SEARCH';
 
 export const getPokemons = ()=>{
     return (dispatch)=>{
@@ -84,5 +85,19 @@ export const filterType = (name) => {
 export const backHome = () => {
     return {
         type: BACK_HOME
+    }
+}
+
+export const filterDb = (name) => {
+    return {
+        type: FILTER_DB,
+        payload: name
+    }
+}
+
+export const searchPokemon = (name) =>{
+    return {
+        type: SEARCH,
+        payload: name
     }
 }
